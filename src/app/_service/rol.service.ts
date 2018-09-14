@@ -1,24 +1,24 @@
 import { Subject } from 'rxjs';
-import { Menu } from './../_model/menu';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HOST, TOKEN_NAME, MICRO_CR } from './../_shared/var.constant';
 import { Injectable } from '@angular/core';
+import { Rol } from '../_model/rol';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MenuService {
+export class RolService {
 
-  private url: string = `${HOST}/menus`;
+  private url: string = `${HOST}/roles`;
   //private url: string = `${HOST}/${MICRO_CR}`;
-  menuCambio = new Subject<Menu[]>();
+  rolCambio = new Subject<Rol[]>();
   mensaje = new Subject<string>();
 
   constructor(private http: HttpClient) { }
 
   listar() {
     let access_token = JSON.parse(sessionStorage.getItem(TOKEN_NAME)).access_token;
-    return this.http.get<Menu[]>(`${this.url}`, {
+    return this.http.get<Rol[]>(`${this.url}`, {
       headers: new HttpHeaders().set('Authorization', `bearer ${access_token}`).set('Content-Type', 'application/json')
     });
   }
@@ -26,13 +26,6 @@ export class MenuService {
   listarPageable(p: number, s: number) {
     let access_token = JSON.parse(sessionStorage.getItem(TOKEN_NAME)).access_token;
     return this.http.get<any[]>(`${this.url}/pageable?page=${p}&size=${s}`, {
-      headers: new HttpHeaders().set('Authorization', `bearer ${access_token}`).set('Content-Type', 'application/json')
-    });
-  }
-
-  listarPorUsuario(nombre: string) {
-    let access_token = JSON.parse(sessionStorage.getItem(TOKEN_NAME)).access_token;
-    return this.http.post<Menu[]>(`${this.url}/usuario`, nombre, {
       headers: new HttpHeaders().set('Authorization', `bearer ${access_token}`).set('Content-Type', 'application/json')
     });
   }
@@ -58,10 +51,4 @@ export class MenuService {
     });
   }
 
-  eliminar(id: number) {
-    let access_token = JSON.parse(sessionStorage.getItem(TOKEN_NAME)).access_token;
-    return this.http.delete(`${this.url}/${id}`, {
-      headers: new HttpHeaders().set('Authorization', `bearer ${access_token}`).set('Content-Type', 'application/json')
-    });
-  }
 }

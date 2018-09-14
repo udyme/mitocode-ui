@@ -29,6 +29,14 @@ import { EspecialComponent } from './pages/consulta/especial/especial.component'
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { SignosComponent } from './pages/signos/signos.component';
 import { SignosEdicionComponent } from './pages/signos/signos-edicion/signos-edicion.component';
+import { MenuComponent } from './pages/menu/menu.component';
+import { RolComponent } from './pages/rol/rol.component';
+import { MenuRolComponent } from './pages/menu-rol/menu-rol.component';
+import { UsuarioRolComponent } from './pages/usuario-rol/usuario-rol.component';
+import { MenuEdicionComponent } from './pages/menu/menu-edicion/menu-edicion.component';
+import { RolEdicionComponent } from './pages/rol/rol-edicion/rol-edicion.component';
+import { MenuRolAsignarComponent } from './pages/menu-rol/menu-rol-asignar/menu-rol-asignar.component';
+import { UsuarioRolAsignarComponent } from './pages/usuario-rol/usuario-rol-asignar/usuario-rol-asignar.component';
 
 
 @NgModule({
@@ -52,7 +60,15 @@ import { SignosEdicionComponent } from './pages/signos/signos-edicion/signos-edi
     TokenComponent,
     EspecialComponent,
     SignosComponent,
-    SignosEdicionComponent
+    SignosEdicionComponent,
+    MenuComponent,
+    RolComponent,
+    MenuRolComponent,
+    UsuarioRolComponent,
+    MenuEdicionComponent,
+    RolEdicionComponent,
+    MenuRolAsignarComponent,
+    UsuarioRolAsignarComponent
   ],
   entryComponents: [DialogoComponent, DialogoDetalleComponent],
   imports: [
