@@ -22,7 +22,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.menuService.menuCambio.subscribe(data => {
-      this.lista = data;
+      this.lista = JSON.parse(JSON.stringify(data)).content;
       this.dataSource = new MatTableDataSource(this.lista);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

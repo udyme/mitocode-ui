@@ -15,7 +15,7 @@ export class MenuEdicionComponent implements OnInit {
 
   constructor(private menuService: MenuService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
 
-  ngOnInit() {
+  ngOnInit() {    
     this.initForm();
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
