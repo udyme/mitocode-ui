@@ -4,6 +4,8 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MenuRolService } from '../../../_service/menu-rol.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Rol } from '../../../_model/rol';
+import { MatSnackBar } from '@angular/material';
+import { MenuService } from '../../../_service/menu.service';
 
 @Component({
   selector: 'app-menu-rol-asignar',
@@ -16,7 +18,14 @@ export class MenuRolAsignarComponent implements OnInit {
   rolesActuales: Rol[] = [];
   allRoles: Rol[] = [];
   rol: Rol;
-  constructor(private menuRolService: MenuRolService, private rolService: RolService, private route: ActivatedRoute, private router: Router, private formBuilder: FormBuilder) { }
+  constructor(
+    private menuRolService: MenuRolService,
+    private menuService: MenuService,
+    private rolService: RolService,
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute,
+    private router: Router,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.initForm();
@@ -30,6 +39,7 @@ export class MenuRolAsignarComponent implements OnInit {
     this.form = this.formBuilder.group({
       idMenu: [null],
       nombre: [null],
+      rol: [null],
       roles: this.formBuilder.array([], Validators.compose([]))
     });
   }
@@ -48,7 +58,7 @@ export class MenuRolAsignarComponent implements OnInit {
   }
 
   private loadDataForm() {
-    this.menuRolService.listarPorId(this.id).subscribe(data => {
+    this.menuService.listarPorId(this.id).subscribe(data => {
       this.form.patchValue({ idMenu: data.idMenu, nombre: data.nombre });
       this.rolesActuales = data.roles;
     });
@@ -63,13 +73,36 @@ export class MenuRolAsignarComponent implements OnInit {
 
   agregar() {
     if (this.rol) {
-      const formGroup = this.addDetalleFormControl();
-      formGroup.patchValue(this.rol);
-      this.rol = null;
+      const localRol = this.rolesActuales.find(r => r.idRol === this.rol.idRol);
+      if (!localRol) {
+        const addRol = this.roles.controls.find(r => r.value.idRol === this.rol.idRol);
+        if (!addRol) {
+          const formGroup = this.addDetalleFormControl();
+          formGroup.patchValue(this.rol);
+          this.rol = null;
+          this.form.patchValue({ rol: null });
+        } else {
+          this.snackBar.open('El Rol seleccionado ya fue asignado', 'Aviso', { duration: 2000 });
+        }
+      } else {
+        this.snackBar.open('El Rol seleccionado ya fue asignado', 'Aviso', { duration: 2000 });
+      }
+    } else {
+      this.snackBar.open('Seleccione un rol para agregar', 'Aviso', { duration: 2000 });
     }
   }
 
   get roles(): FormArray {
     return this.form.get('roles') as FormArray;
+  }
+
+  save() {
+     this.menuRolService.registrar(this.form.value).subscribe(data => {
+      // this.menuService.listarPageable(0, 10).subscribe(r => {
+      //   this.menuService.menuCambio.next(r);
+      //   this.menuService.mensaje.next('Se registró');
+      // });
+    });
+    this.router.navigate(['menu-rol']);
   }
 }

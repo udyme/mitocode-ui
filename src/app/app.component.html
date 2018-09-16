@@ -23,7 +23,7 @@
                 <span>Cerrar Sesión</span>
             </button>
         </mat-menu>
-        <mat-menu #roles="matMenu" >
+        <mat-menu #roles="matMenu">
             <button mat-menu-item *ngFor="let rol of userRoles">{{ rol.nombre | uppercase }}</button>
         </mat-menu>
     </mat-toolbar>
