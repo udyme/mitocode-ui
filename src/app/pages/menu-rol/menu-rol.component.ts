@@ -21,17 +21,6 @@ export class MenuRolComponent implements OnInit {
   constructor(private menuService: MenuService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.menuService.menuCambio.subscribe(data => {
-      this.lista = data;
-      this.dataSource = new MatTableDataSource(this.lista);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-
-      this.menuService.mensaje.subscribe(data => {        
-        this.snackBar.open(data, 'Aviso', { duration: 2000 });
-      });      
-    });
-
     this.menuService.listarPageable(this.pageIndex, this.pageSize).subscribe(data => {
       let r = JSON.parse(JSON.stringify(data)).content;
       this.cantidad = JSON.parse(JSON.stringify(data)).totalElements;

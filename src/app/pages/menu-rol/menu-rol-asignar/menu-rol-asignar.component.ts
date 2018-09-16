@@ -98,10 +98,7 @@ export class MenuRolAsignarComponent implements OnInit {
 
   save() {
      this.menuRolService.registrar(this.form.value).subscribe(data => {
-      // this.menuService.listarPageable(0, 10).subscribe(r => {
-      //   this.menuService.menuCambio.next(r);
-      //   this.menuService.mensaje.next('Se registró');
-      // });
+      this.snackBar.open('Se Registro correctamente', 'Aviso', { duration: 2000 });
     });
     this.router.navigate(['menu-rol']);
   }
