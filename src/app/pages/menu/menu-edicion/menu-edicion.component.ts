@@ -46,7 +46,7 @@ export class MenuEdicionComponent implements OnInit {
       //update
       this.menuService.modificar(this.form.value).subscribe(data => {
         this.menuService.listarPageable(0, 10).subscribe(r => {
-          this.menuService.menuCambio.next(r);
+          this.menuService.menuEdicionCambio.next(r);
           this.menuService.mensaje.next('Se modificó');
         });
       });
@@ -54,7 +54,7 @@ export class MenuEdicionComponent implements OnInit {
       //insert
       this.menuService.registrar(this.form.value).subscribe(data => {
         this.menuService.listarPageable(0, 10).subscribe(r => {
-          this.menuService.menuCambio.next(r);
+          this.menuService.menuEdicionCambio.next(r);
           this.menuService.mensaje.next('Se registró');
         });
       });

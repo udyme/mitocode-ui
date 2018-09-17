@@ -21,7 +21,7 @@ export class MenuComponent implements OnInit {
   constructor(private menuService: MenuService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.menuService.menuCambio.subscribe(data => {
+    this.menuService.menuEdicionCambio.subscribe(data => {
       this.lista = JSON.parse(JSON.stringify(data)).content;
       this.dataSource = new MatTableDataSource(this.lista);
       this.dataSource.paginator = this.paginator;

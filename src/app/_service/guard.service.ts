@@ -9,13 +9,14 @@ import { CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot, Router } from
 import * as decode from 'jwt-decode';
 import { map } from 'rxjs/operators';
 import { Observable, pipe } from 'rxjs';
+import { PerfilService } from './perfil.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GuardService implements CanActivate {
 
-  constructor(private loginService: LoginService, private menuService: MenuService, private router: Router) { }
+  constructor(private loginService: LoginService, private menuService: MenuService, private perfilService: PerfilService, private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const helper = new JwtHelperService();
@@ -27,16 +28,15 @@ export class GuardService implements CanActivate {
       return false;
     } else {
       let token = JSON.parse(sessionStorage.getItem(TOKEN_NAME));
-      console.log(helper.isTokenExpired(token.access_token));
       if (!helper.isTokenExpired(token.access_token)) {
         const decodedToken = decode(token.access_token);
-        //console.log(decodedToken);
-        let roles = decodedToken.authorities;
-        //console.log(roles);
         let url = state.url;
-
         return this.menuService.listarPorUsuario(decodedToken.user_name).pipe(map((data: Menu[]) => {
           this.menuService.menuCambio.next(data);
+          this.perfilService.buscar().subscribe(response => {
+            this.perfilService.perfilCambio.next(response);
+          });
+
 
           let cont = 0;
           for (let m of data) {

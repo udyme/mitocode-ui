@@ -13,7 +13,7 @@
             <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item [matMenuTriggerFor]="roles">
+            <button mat-menu-item [matMenuTriggerFor]="roles" routerLink="/perfil">
                 <mat-icon>account_box</mat-icon>
                 <span *ngIf="userName">{{userName | uppercase }}</span>
                 <span *ngIf="!userName">Anonimo</span>
@@ -24,7 +24,14 @@
             </button>
         </mat-menu>
         <mat-menu #roles="matMenu">
-            <button mat-menu-item *ngFor="let rol of userRoles">{{ rol.nombre | uppercase }}</button>
+                <mat-list>
+                        <h3 mat-subheader>Roles</h3>
+                        <mat-list-item *ngFor="let rol of userRoles">
+                          <mat-icon mat-list-icon>folder</mat-icon>
+                          <h4 mat-line>{{ rol.nombre | uppercase }}</h4>
+                          <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+                        </mat-list-item>
+                      </mat-list>
         </mat-menu>
     </mat-toolbar>
 

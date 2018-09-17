@@ -10,6 +10,7 @@ import { Subject } from 'rxjs'; //cambio!
 })
 export class PacienteService {
 
+  pacienteDialogCambio= new Subject<any>();
   pacienteCambio = new Subject<Paciente[]>();
   mensaje = new Subject<string>();
   url: string = `${HOST}/pacientes`
@@ -41,6 +42,13 @@ export class PacienteService {
   registrar(paciente: Paciente) {
     let access_token = JSON.parse(sessionStorage.getItem(TOKEN_NAME)).access_token;
     return this.http.post(this.url, paciente, {
+      headers: new HttpHeaders().set('Authorization', `bearer ${access_token}`).set('Content-Type', 'application/json')
+    });
+  }
+
+  registrarDialog(paciente: Paciente) {
+    let access_token = JSON.parse(sessionStorage.getItem(TOKEN_NAME)).access_token;
+    return this.http.post(`${this.url}/registrar-dialog`, paciente, {
       headers: new HttpHeaders().set('Authorization', `bearer ${access_token}`).set('Content-Type', 'application/json')
     });
   }

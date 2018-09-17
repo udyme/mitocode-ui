@@ -6,6 +6,8 @@ import { Paciente } from '../../../_model/paciente';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { PacienteService } from '../../../_service/paciente.service';
+import { MatDialog } from '@angular/material';
+import { PacienteDialogoComponent } from './paciente-dialogo/paciente-dialogo.component';
 
 @Component({
   selector: 'app-signos-edicion',
@@ -23,19 +25,16 @@ export class SignosEdicionComponent implements OnInit {
   myControlPaciente: FormControl = new FormControl();
   filteredOptions: Observable<any[]>;
 
-  constructor(private signosService: SignosService, private pacienteService: PacienteService, private route: ActivatedRoute, private router: Router, builder: FormBuilder) {
-
-    this.form = builder.group({
-      'idSignos': new FormControl(0),
-      'paciente': this.myControlPaciente,
-      'fecha': new FormControl(new Date(), [Validators.required]),
-      'temperatura': new FormControl('', [Validators.required]),
-      'pulso': new FormControl('', [Validators.required]),
-      'ritmoCardiaco': new FormControl('', [Validators.required])
-    });
-  }
+  constructor(
+    private signosService: SignosService,
+    private pacienteService: PacienteService,
+    public dialog: MatDialog,
+    private route: ActivatedRoute,
+    private router: Router,
+    private builder: FormBuilder) { }
 
   ngOnInit() {
+    this.initFormBuilder();
     this.listarPacientes();
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
@@ -47,6 +46,22 @@ export class SignosEdicionComponent implements OnInit {
         startWith(null),
         map(val => this.filter(val))
       );
+
+    this.pacienteService.pacienteDialogCambio.subscribe(data => {
+      this.form.patchValue({ paciente: data });
+      this.listarPacientes();
+    });
+  }
+
+  initFormBuilder() {
+    this.form = this.builder.group({
+      idSignos: new FormControl(0),
+      paciente: this.myControlPaciente,
+      fecha: new FormControl(new Date(), [Validators.required]),
+      temperatura: new FormControl('', [Validators.required]),
+      pulso: new FormControl('', [Validators.required]),
+      ritmoCardiaco: new FormControl('', [Validators.required])
+    });
   }
 
   filter(val: any) {
@@ -60,7 +75,7 @@ export class SignosEdicionComponent implements OnInit {
   }
 
   seleccionarPaciente(e) {
-    
+
   }
 
   displayFn(val: Paciente) {
@@ -82,7 +97,7 @@ export class SignosEdicionComponent implements OnInit {
     }
   }
 
-  operar() { 
+  operar() {
     if (this.edicion) {
       //update
       this.signosService.modificar(this.form.value).subscribe(data => {
@@ -104,8 +119,13 @@ export class SignosEdicionComponent implements OnInit {
     this.router.navigate(['signos'])
   }
 
-  NuevoPaciente(){
-    console.log("nuevo");
+  NuevoPaciente() {
+    let paciente = new Paciente();
+    let dialogRef = this.dialog.open(PacienteDialogoComponent, {
+      width: '250px',
+      disableClose: true,
+      data: paciente
+    });
   }
 
 }

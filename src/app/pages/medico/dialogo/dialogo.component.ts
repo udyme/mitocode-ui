@@ -6,7 +6,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '../../../../../node_modules/@angu
 @Component({
   selector: 'app-dialogo',
   templateUrl: './dialogo.component.html',
-  styleUrls: ['./dialogo.component.css']
+  styleUrls: ['./dialogo.component.css']  
 })
 export class DialogoComponent implements OnInit {
 

@@ -1,3 +1,4 @@
+import { PerfilComponent } from './pages/perfil/perfil.component';
 import { RolEdicionComponent } from './pages/rol/rol-edicion/rol-edicion.component';
 import { MenuEdicionComponent } from './pages/menu/menu-edicion/menu-edicion.component';
 import { MenuRolComponent } from './pages/menu-rol/menu-rol.component';
@@ -82,6 +83,7 @@ const routes: Routes = [
     ], canActivate: [GuardService]
   },
   { path: 'reporte', component: ReporteComponent, canActivate: [GuardService] },
+  { path: 'perfil', component: PerfilComponent, canActivate: [GuardService] },
   { path: 'login', component: LoginComponent },
   {
     path: 'recuperar', component: RecuperarComponent, children: [

@@ -37,6 +37,8 @@ import { MenuEdicionComponent } from './pages/menu/menu-edicion/menu-edicion.com
 import { RolEdicionComponent } from './pages/rol/rol-edicion/rol-edicion.component';
 import { MenuRolAsignarComponent } from './pages/menu-rol/menu-rol-asignar/menu-rol-asignar.component';
 import { UsuarioRolAsignarComponent } from './pages/usuario-rol/usuario-rol-asignar/usuario-rol-asignar.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
+import { PacienteDialogoComponent } from './pages/signos/signos-edicion/paciente-dialogo/paciente-dialogo.component';
 
 
 @NgModule({
@@ -68,9 +70,11 @@ import { UsuarioRolAsignarComponent } from './pages/usuario-rol/usuario-rol-asig
     MenuEdicionComponent,
     RolEdicionComponent,
     MenuRolAsignarComponent,
-    UsuarioRolAsignarComponent
+    UsuarioRolAsignarComponent,
+    PerfilComponent,
+    PacienteDialogoComponent
   ],
-  entryComponents: [DialogoComponent, DialogoDetalleComponent],
+  entryComponents: [DialogoComponent, DialogoDetalleComponent, PacienteDialogoComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

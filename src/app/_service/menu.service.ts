@@ -12,6 +12,7 @@ export class MenuService {
   private url: string = `${HOST}/menus`;
   //private url: string = `${HOST}/${MICRO_CR}`;
   menuCambio = new Subject<Menu[]>();
+  menuEdicionCambio = new Subject<Menu[]>();
   mensaje = new Subject<string>();
 
   constructor(private http: HttpClient) { }

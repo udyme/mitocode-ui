@@ -5,6 +5,7 @@ import { LoginService } from './../_service/login.service';
 import { Component, OnInit } from '@angular/core';
 import * as decode from 'jwt-decode';
 import '../login-animation.js';
+import { PerfilService } from '../_service/perfil.service';
 
 @Component({
   selector: 'app-login',
@@ -17,8 +18,8 @@ export class LoginComponent implements OnInit {
   clave: string;
   mensaje: string = "";
   error: string = "";
-  
-  constructor(private loginService: LoginService, private menuService: MenuService, private router: Router) { }
+
+  constructor(private loginService: LoginService, private perfilService: PerfilService, private menuService: MenuService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -40,6 +41,10 @@ export class LoginComponent implements OnInit {
         this.menuService.listarPorUsuario(decodedToken.user_name).subscribe(data => {
           this.menuService.menuCambio.next(data);
         });
+        this.perfilService.buscar().subscribe(response => {
+          this.perfilService.perfilCambio.next(response);
+        });
+
 
         //console.log(decodedToken.authorities);
         let roles = decodedToken.authorities;
